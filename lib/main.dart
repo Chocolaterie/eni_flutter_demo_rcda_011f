@@ -4,6 +4,7 @@ void main() {
   runApp(AppDemo());
 }
 
+
 // L'application
 class AppDemo extends StatelessWidget {
   @override
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.all(60.0),
-              child: Text("Ligne 1"),
+              child: Text("Ligne 1", style: TextStyle(color: Color(0xFF58B0F0)),),
             ),
             SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {}, child: Text("Un Bouton"))),
             Expanded(child: Text("Ligne 2")),
