@@ -1,14 +1,14 @@
+import 'package:eni_flutter_demo/demo_form/validator-helper.dart';
 import 'package:eni_flutter_demo/demo_stateful/counter-component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:localization/localization.dart';
 
-void main(){
+void main() {
   runApp(DemoFormApp());
 }
 
 class DemoFormApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     // set json file directory
@@ -30,25 +30,30 @@ class DemoFormApp extends StatelessWidget {
           // default language
           return Locale('fr', 'FR');
         },
-      title: "Demo Form",
-      home: FormPage()
-    );
+        title: "Demo Form",
+        home: FormPage());
   }
 }
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
+  @override
+  State<FormPage> createState() => _FormPageState();
+}
 
+class _FormPageState extends State<FormPage> {
   // Association de la référence d'un formulaire
+  bool mySwitchValue = false;
+
   var formKey = GlobalKey<FormState>();
 
-  void onSubmit(){
+  void onSubmit() {
     // Enclencher la validation et retourn "True" si aucune erreur
-    if (this.formKey.currentState!.validate()){
+    if (this.formKey.currentState!.validate()) {
       print("Formulaire valide");
     }
   }
 
-  String? emailValidator(String? value){
+  String? emailValidator(String? value) {
     // Erreur : Vide
     if (value!.isEmpty) {
       // message traduit
@@ -56,15 +61,14 @@ class FormPage extends StatelessWidget {
     }
 
     // Erreur : 3 length
-    if (value!.length < 4){
+    if (value!.length < 4) {
       return "L'email doit au moins avoir 3 caractères";
     }
 
     // Errur si regex email invalide
     if (!RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(value!)){
-
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(value!)) {
       return 'email.error.regex'.i18n();
     }
 
@@ -75,18 +79,35 @@ class FormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Demo Form")),
-      body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              validator: emailValidator,
-              decoration: InputDecoration(labelText: "Email"),),
-            SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onSubmit, child: Text("Submit")))
-          ],
-        ),
-      )
-    );
+        appBar: AppBar(title: Text("Demo Form")),
+        body: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                validator: emailValidator,
+                decoration: InputDecoration(labelText: "Email"),
+              ),
+              // Champ password
+              TextFormField(
+                validator: EniValidator.passwordValidator,
+                obscureText: true,
+              ),
+              // Attention pour utiliser switch il faut etre dans un Stateful
+              // pour rafraichir l'etat du switch
+              Switch(
+                  value: mySwitchValue,
+                  onChanged: (value) {
+                    setState(() {
+                      mySwitchValue = value;
+                    });
+                  }),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: onSubmit, child: Text("Submit")))
+            ],
+          ),
+        ));
   }
 }
