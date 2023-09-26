@@ -4,7 +4,6 @@ void main() {
   runApp(AppDemo());
 }
 
-
 // L'application
 class AppDemo extends StatelessWidget {
   @override
