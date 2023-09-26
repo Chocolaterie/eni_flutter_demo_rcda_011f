@@ -1,0 +1,4 @@
+{
+  "email.error.empty" : "L'email ne doit pas être vide",
+  "email.error.regex" : "Format d'email non valide"
+}
