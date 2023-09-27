@@ -27,19 +27,19 @@ class MovieApiPage extends StatefulWidget {
 }
 
 class _MovieApiPageState extends State<MovieApiPage> {
-  // Movie nullable
-  Movie? movie;
+  // Liste de films
+  List<Movie> movies = [];
 
   void callApi() async {
     // Je récupère le point d'entrée de l'api
     var response = await http.get(Uri.parse(
-        "https://raw.githubusercontent.com/Chocolaterie/EniWebService/main/api/movie.json"));
+        "https://raw.githubusercontent.com/Chocolaterie/EniWebService/main/api/movies.json"));
 
     // Je convertis la réponse http en json
     var json = convert.jsonDecode(response.body);
 
     // Je convertis le json en objet Movie
-    movie = Movie.jsonToMovie(json);
+    movies = List<Movie>.from(json.map((movieJson) => Movie.jsonToMovie(movieJson)));
 
     // J'affiche movie (rafraichir la vue)
     setState(() {});
@@ -64,12 +64,12 @@ class _MovieApiPageState extends State<MovieApiPage> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: movies.length,
                   itemBuilder: (BuildContext context, int index) {
                     // Faire la vue d'une cellule
                     return Container(color: Colors.black12, child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Text("Ma cellule"),
+                      child: Text("Le film : ${movies[index].title}"),
                     ));
               }),
             )
