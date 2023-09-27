@@ -39,23 +39,13 @@ class PageOne extends StatelessWidget {
 }
 
 class PageTwo extends StatelessWidget {
-
-  void onClickBtn(BuildContext context){
-    Navigator.pushNamed(context, "/");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Page 2"),
       ),
-      body: Center(child: Column(
-        children: [
-          Text("Page Two"),
-          ElevatedButton(onPressed: () { onClickBtn(context); }, child: Text("Ajouter une page (encore)"))
-        ],
-      )),
+      body: Center(child: Text("Page Two")),
     );
   }
 }
