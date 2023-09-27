@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-// Le lanceru
+// Le lancer
 void main() {
   runApp(DemoMovieApi());
 }
@@ -56,16 +56,23 @@ class _MovieApiPageState extends State<MovieApiPage> {
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text("Le film : ${movie?.title}"),
-            ),
             ElevatedButton(
               onPressed: () {
                 callApi();
               },
               child: Text("Appeler Api"),
             ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    // Faire la vue d'une cellule
+                    return Container(color: Colors.black12, child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Ma cellule"),
+                    ));
+              }),
+            )
           ],
         ),
       ),
