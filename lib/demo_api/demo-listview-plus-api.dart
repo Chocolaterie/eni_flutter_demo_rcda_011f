@@ -36,10 +36,10 @@ class _MovieApiPageState extends State<MovieApiPage> {
    * Ouvrir la boite de dialogue
    */
   void showProgress(){
-    // instancier la boite de dialogue
+    // Instancier la boite de dialogue
     pd = ProgressDialog(context: context);
 
-    // afficher
+    // Afficher
     pd!.show(
       msg: "Chargement des données en cours",
       barrierColor: Color(0x55000000)
